@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { Box, Card, CardBody, ChakraProvider, Flex, Text, Image, Center, List} from '@chakra-ui/react';
+import { Box, Card, CardBody, ChakraProvider, Flex, Text, Image, Center, List, Stack, CardFooter,Button, UnorderedList, ListItem } from '@chakra-ui/react';
 import { MapContainer, TileLayer, useMap, Marker,Popup,  } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { DateTime } from "luxon";
+
 
 
 
@@ -28,46 +29,49 @@ const Ip = () => {
   const lng = location ? location.lng : '';
   const country = location ? location.country : '';
   const city = location ? location.city : '';
-  const flag = `https://flagcdn.com/w20/${country.toLowerCase()}.png`;
+  const flag = `https://flagcdn.com/w160/${country.toLowerCase()}.png`;
 
 
   const localNow = DateTime.local();
  
-  const buenosAiresNow = DateTime.now().setZone('America/Argentina/Buenos_Aires');
- 
-  const timeDiff = buenosAiresNow.diff(localNow, ['days', 'hours']);
-
-  const localNowString = localNow.toLocaleString(DateTime.DATETIME_FULL);
-  const timeDiffString = timeDiff.toFormat("d 'days' h 'hours'");
+  const localNowString = localNow.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
  
   const position = [lat, lng];
   
   return (
-<>
-<Flex >
-<Card background="whitesmoke" >
+  
+  <Center>
+<Box p={4}>
+<Card background="whitesmoke" direction={{ base: 'column', sm: 'row' }}
+  overflow='hidden'
+  variant='outline'
+  axW='sm' borderWidth='1px' borderRadius='lg' boxShadow='lg' >
+  
+  
+<Image src={flag}
+  borderRadius='full'
+  boxSize='150px'
+ alt='flag' marginTop="20px" marginLeft="20px"></Image>
+<Stack>
 <CardBody>
-
-<List spacing={3} >
-
-<Text color="black">IP: {ip}</Text>
-
-<Text color="black">Location: {city}, {country}</Text>
-
-<Image src={flag}></Image>
-<Text color="black">Time: {localNowString}</Text>
-<Text color="black">Buenos Aires time difference: {timeDiffString}</Text>
-
+<UnorderedList listStyleType="none">
+<List >
+<ListItem><Text as="kbd">IP: {ip}</Text></ListItem>
+<ListItem><Text as="kbd">City: {city}</Text></ListItem>
+<ListItem><Text as="kbd">Region: {region}</Text></ListItem>
+<ListItem><Text as="kbd">Country: {country}</Text></ListItem>
+<ListItem><Text as="kbd">Latitude: {lat}</Text></ListItem>
+<ListItem><Text as="kbd">Longitude: {lng}</Text></ListItem>
+<ListItem><Text as="kbd">Local Time: {localNowString}</Text></ListItem>
 </List>
+</UnorderedList>
 
 </CardBody>
-</Card>
-<Box>
-</Box>
-</Flex>
+</Stack>
 
-  
-  <MapContainer center={position} zoom={13} scrollWheelZoom={true}  style={{ height: '500px', width:'500px' }}>
+
+  <MapContainer center={position} zoom={13} scrollWheelZoom={true}  style={{ height: '500px', width:'500px' }}
+  >
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -78,10 +82,9 @@ const Ip = () => {
     </Popup>
   </Marker>
 </MapContainer>
-
-
-
-</>
+</Card>
+</Box>
+</Center>
   );
 };
 
