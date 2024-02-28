@@ -10,6 +10,7 @@ import { DateTime } from "luxon";
 
 
 
+
 const Ip = () => {
   const [data, setData] = useState('');
 
@@ -39,15 +40,15 @@ const Ip = () => {
   const position = [lat, lng];
   
   return (
-  
-  <Center>
-<Box p={4}>
+ <Flex direction="column" align="center" justify="center" h="100vh" bg="linear-gradient(to right, #ffd89b, #19547b)"> 
+<Center  >
+<Box p={4} >
 <Card background="whitesmoke" direction={{ base: 'column', sm: 'row' }}
   overflow='hidden'
   variant='outline'
   axW='sm' borderWidth='1px' borderRadius='lg' boxShadow='lg' >
   
-  
+<Center>
 <Image src={flag}
   borderRadius='full'
   boxSize='150px'
@@ -68,15 +69,15 @@ const Ip = () => {
 
 </CardBody>
 </Stack>
+</Center>
 
-
-  <MapContainer center={position} zoom={13} scrollWheelZoom={true}  style={{ height: '500px', width:'500px' }}
+  <MapContainer center={[lat,lng]} zoom={13} scrollWheelZoom={true}  style={{ height: '300px', width:'500px' }}
   >
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
-  <Marker position={position}>
+  <Marker position={[lat,lng]}>
     <Popup>
     {[lat, lng]}  <br /> {city}, {region}, {country}
     </Popup>
@@ -85,6 +86,7 @@ const Ip = () => {
 </Card>
 </Box>
 </Center>
+</Flex>
   );
 };
 
