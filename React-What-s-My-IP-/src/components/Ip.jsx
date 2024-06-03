@@ -13,30 +13,36 @@ import { DateTime } from "luxon";
 
 const Ip = () => {
   const [data, setData] = useState('');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`https://geo.ipify.org/api/v1?apiKey=${import.meta.env.VITE_API_KEY}`)
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error('Error:', error));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://geo.ipify.org/api/v1?apiKey=${import.meta.env.VITE_API_KEY}`);
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err.message);
+        console.error('Error:', err);
+      }
+    };
 
-  }, []);
+    fetchData();
+  }, [])
+
+  if (error) {
+    return <Center h="100vh" bg="linear-gradient(to right, #ffd89b, #19547b)"><Text>Error: {error}</Text></Center>;
+  }
+  
+  if (!data) {
+    return <Center h="100vh" bg="linear-gradient(to right, #ffd89b, #19547b)"><Text>Loading...</Text></Center>;
+  }
 
 
-  const ip = data.ip;
-  const location = data.location;
-  const region = location ? location.region : '';
-  const lat = location ? location.lat : '';
-  const lng = location ? location.lng : '';
-  const country = location ? location.country : '';
-  const city = location ? location.city : '';
+  const { ip, location } = data;
+  const { region, lat, lng, country, city } = location;
   const flag = `https://flagcdn.com/w160/${country.toLowerCase()}.png`;
-
-
-  const localNow = DateTime.local();
- 
-  const localNowString = localNow.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
- 
+  const localNowString = DateTime.local().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
   const position = [lat, lng];
   
   return (
