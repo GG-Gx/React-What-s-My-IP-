@@ -46,53 +46,72 @@ const Ip = () => {
   const position = [lat, lng];
   
   return (
- <Flex direction="column" align="center" justify="center" h="100vh" bg="linear-gradient(to right, #ffd89b, #19547b)"> 
-<Center  >
-<Box p={4} >
-<Card background="whitesmoke" direction={{ base: 'column', sm: 'row' }}
-  overflow='hidden'
-  variant='outline'
-  axW='sm' borderWidth='1px' borderRadius='lg' boxShadow='lg' >
+    <Flex 
+    direction="column" align="center" justify="center"
+    bg="linear-gradient(to right, #ffd89b, #19547b)" height
+    ="100vh"
   
-<Center>
-<Image src={flag}
-  borderRadius='full'
-  boxSize='150px'
- alt='flag' marginTop="20px" marginLeft="20px"></Image>
-<Stack>
-<CardBody>
-<UnorderedList listStyleType="none">
-<List >
-<ListItem><Text as="kbd">IP: {ip}</Text></ListItem>
-<ListItem><Text as="kbd">City: {city}</Text></ListItem>
-<ListItem><Text as="kbd">Region: {region}</Text></ListItem>
-<ListItem><Text as="kbd">Country: {country}</Text></ListItem>
-<ListItem><Text as="kbd">Latitude: {lat}</Text></ListItem>
-<ListItem><Text as="kbd">Longitude: {lng}</Text></ListItem>
-<ListItem><Text as="kbd">Local Time: {localNowString}</Text></ListItem>
-</List>
-</UnorderedList>
+     >
+        <Box
+        marginTop={4}
+        marginBottom={2}
+      
 
-</CardBody>
-</Stack>
-</Center>
+        >
+         
+          <Card background="whitesmoke" direction={{ base: 'column', sm: 'row' }} overflow='hidden' variant='outline'   boxShadow='lg'
+          borderRadius="lg"
+          >
+            <Center>
+              <Image src={flag} borderRadius='full'alt='flag' margin={4} 
+              boxShadow='md'
+              fit="cover"
+              width="10vh"
+              height="10vh"
+              />
+              <Stack>
+                <CardBody>
+                  <UnorderedList listStyleType="none" p={0} textAlign="left" fontSize="md" fontWeight="bold" color="black" m={4}>
+                    <List>
+                      <ListItem><Text as="kbd">IP: {ip}</Text></ListItem>
+                      <ListItem><Text as="kbd">City: {city}</Text></ListItem>
+                      <ListItem><Text as="kbd">Region: {region}</Text></ListItem>
+                      <ListItem><Text as="kbd">Country: {country}</Text></ListItem>
+                      <ListItem><Text as="kbd">Latitude: {lat}</Text></ListItem>
+                      <ListItem><Text as="kbd">Longitude: {lng}</Text></ListItem>
+                      <ListItem><Text as="kbd">Local Time: {localNowString}</Text></ListItem>
+                    </List>
+                  </UnorderedList>
+                </CardBody>
+              </Stack>
+            </Center>
+          </Card>
+          </Box>
+          <Box
+          marginTop={2}
+          marginBottom={4}
+          marginLeft={4}
+          marginRight={4}
+          
+          width={{ base: '100%', sm: '50%' }}
 
-  <MapContainer center={[lat,lng]} zoom={13} scrollWheelZoom={true}  style={{ height: '300px', width:'500px' }}
-  >
-  <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-  <Marker position={[lat,lng]}>
-    <Popup>
-    {[lat, lng]}  <br /> {city}, {region}, {country}
-    </Popup>
-  </Marker>
-</MapContainer>
-</Card>
-</Box>
-</Center>
-</Flex>
+          >
+          <Card
+          background="whitesmoke" direction={{ base: 'column', sm: 'row' }} overflow='hidden' variant='outline'   boxShadow='lg'
+          borderRadius="lg" 
+          >
+            <MapContainer center={[lat, lng]} zoom={15} scrollWheelZoom={true} style={{ height: '300px', width: '100%' }}>
+              <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={[lat, lng]}>
+                <Popup>
+                  {[lat, lng]} <br /> {city}, {region}, {country}
+                </Popup>
+              </Marker>
+            </MapContainer>
+          </Card>
+          </Box>
+ 
+    </Flex>
   );
 };
 
